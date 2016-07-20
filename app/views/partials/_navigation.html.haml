@@ -1,0 +1,32 @@
+%nav.navbar.navbar-default.nav-opacity
+  .container-fluid
+    .navbar-header
+      %button.navbar-toggle.collapsed{"aria-expanded" => "false", "data-target" => "#bs-example-navbar-collapse-1", "data-toggle" => "collapse", :type => "button"}
+        %span.sr-only Toggle navigation
+        %span.icon-bar
+        %span.icon-bar
+        %span.icon-bar
+      %a.navbar-brand{:href => "/"} Grupo 1
+    #bs-example-navbar-collapse-1.collapse.navbar-collapse
+      %ul.nav.navbar-nav
+        %li
+          %a{:href => "/"}
+            Inicio
+            %span.sr-only (current)
+      %ul.nav.navbar-nav.navbar-right
+        %li.dropdown
+          %a.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => "#", :role => "button"}
+            Cuenta
+            %span.caret
+          %ul.dropdown-menu
+            - if user_signed_in?
+              %li.col-md{:type => "none"}
+                = link_to "Cerrar sesíon", destroy_user_session_path, method: :delete
+              %li{:role => "presentation"}
+                %a{:href => "#"} Profile
+            - else
+              %li.col-md{:type => "none"}
+                = link_to "iniciar sesíon", new_user_session_path
+              %li.col-md{:type => "none"}
+                = link_to "Crear cuenta", new_user_registration_path
+

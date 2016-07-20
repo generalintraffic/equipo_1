@@ -1,0 +1,29 @@
+.margin-sesion.well
+  .row
+    .col-md-6.col-md-offset-3.text-center.login
+      %p
+        %h1 Crear Cuenta
+  = form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
+    = devise_error_messages!
+    %div
+      .field
+        = f.label :email, "Correo Electronico"
+        %br/
+        = f.email_field :email, autofocus: true, class: "form-control"  ,placeholder:"example@mail.com"
+      .field
+        = f.label :username, "Nombre de Usuario"
+        %br/
+        = f.text_field :username, autofocus: true,  class: "form-control"  ,placeholder:"example00"
+      .field
+        = f.label :password
+        - if @minimum_password_length
+          %em
+            (#{@minimum_password_length} characters minimum)
+        %br/
+        = f.password_field :password, autocomplete: "off", class: "form-control"  , placeholder:"*******"
+      .field.form-group
+        = f.label :password_confirmation
+        %br/
+        = f.password_field :password_confirmation, autocomplete: "off", class: "form-control"  ,placeholder:"*******"
+      .actions.form-group
+        = f.submit "Crear Cuenta", class: "btn btn-success"

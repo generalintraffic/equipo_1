@@ -6,13 +6,18 @@
         %span.icon-bar
         %span.icon-bar
         %span.icon-bar
-      %a.navbar-brand{:href => "/"} Grupo 1
+      %a.logo.navbar-brand{:href => "/"} MapCars
     #bs-example-navbar-collapse-1.collapse.navbar-collapse
       %ul.nav.navbar-nav
         %li
           %a{:href => "/"}
             Inicio
             %span.sr-only (current)
+        %li
+          -if user_signed_in?
+            %h3.user-name
+              =current_user.username
+         
       %ul.nav.navbar-nav.navbar-right
         %li.dropdown
           %a.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => "#", :role => "button"}
@@ -23,7 +28,7 @@
               %li.col-md{:type => "none"}
                 = link_to "Cerrar sesíon", destroy_user_session_path, method: :delete
               %li{:role => "presentation"}
-                %a{:href => "#"} Profile
+                %a{:href => "/users/edit"} Edit Profile
             - else
               %li.col-md{:type => "none"}
                 = link_to "iniciar sesíon", new_user_session_path

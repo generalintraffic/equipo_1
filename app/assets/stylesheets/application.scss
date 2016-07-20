@@ -15,8 +15,8 @@
 @import "bootstrap";
 
 body{
-	background-image: url("gps.jpg");
-	background-size: cover;
+	background-image: url("gps-mejorado.jpg");
+	
 }
 
 .login{
@@ -28,5 +28,15 @@ body{
 	background-color:rgba(114, 151, 162, 0.69);
 }
 .nav-opacity{
-	opacity: 0.59;
+	opacity: 0.70;
+}
+.user-name{
+	margin-left: 450px;
+    margin-top: 12px;
+    color: rgba(63, 81, 181, 0.87);
+    letter-spacing: -2px;
+}
+.logo{
+	letter-spacing: -3px;
+    font-size: 24px;
 }

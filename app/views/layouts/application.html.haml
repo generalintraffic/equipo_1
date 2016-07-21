@@ -3,12 +3,19 @@
   %head
     %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
     %title Proyecto1
+    %link{:href => "https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.css", :rel => "stylesheet"}/
+    %link{:href => "https://api.mapbox.com/mapbox.js/plugins/leaflet-draw/v0.2.3/leaflet.draw.css", :rel => "stylesheet"}/
+    %script{:src => "https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.js"}
+    %script{:src => "https://api.mapbox.com/mapbox.js/plugins/leaflet-draw/v0.2.3/leaflet.draw.js"}
+    %script{:src => "https://api.mapbox.com/mapbox.js/plugins/leaflet-geodesy/v0.1.0/leaflet-geodesy.js"}
+    %script{:src => "https://api.mapbox.com/mapbox.js/plugins/leaflet-omnivore/v0.2.0/leaflet-omnivore.min.js"}
+
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = csrf_meta_tags
+
   %body
     = render "partials/navigation"
-    .container
-      %p.notice= notice
-      %p.alert= alert
-      = yield
+    %p.notice= notice
+    %p.alert= alert
+    = yield

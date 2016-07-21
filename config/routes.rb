@@ -1,11 +1,16 @@
 Rails.application.routes.draw do
+  root 'mapa#index'
+
   devise_for :users
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
+<<<<<<< HEAD
   #root 'welcome#index'
 
+=======
+>>>>>>> 27da3d1636cefb054580c58b181f7fc361b035e9
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

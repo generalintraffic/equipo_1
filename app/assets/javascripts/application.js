@@ -13,7 +13,6 @@
 //= require jquery
 //= require bootstrap-sprockets
 //= require jquery_ujs
-//= require jquery
-//= require bootstrap-sprockets
+//= require L.Control.Sidebar
 //= require turbolinks
 //= require_tree .

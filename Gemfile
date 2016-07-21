@@ -17,6 +17,7 @@ gem 'bootstrap-sass', '~> 3.3.6'
 gem 'pry-rails'
 gem 'annotate'
 gem 'haml-rails'
+gem 'leaflet-sidebar-rails'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'

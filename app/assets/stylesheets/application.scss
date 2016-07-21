@@ -41,4 +41,25 @@ body{
 	letter-spacing: -3px;
     font-size: 24px;
 }
-#map { position:absolute; top:0px; bottom:0; width:100%; }
+#map {
+    border-radius: 10px;
+    border: 8px solid gray;
+    margin-bottom: 20px;
+    position: absolute;
+    top: -10px;
+    bottom: 0;
+    padding-right: 1050px;
+    padding-bottom: 500px;
+ }
+.cero-margin{
+	margin-left: 0;
+	margin-right: 0;
+}
+#sidebar{
+	color: white;
+	border: 8px solid gray;
+    margin-right: -40px;
+    padding-bottom: 192px;
+    margin-top: -10px;
+    background-color: rgba(233, 30, 99, 0.61);
+}

@@ -11,9 +11,6 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
-ActiveRecord::Schema.define(version: 20160720031534) do
-=======
 ActiveRecord::Schema.define(version: 20160720134055) do
 
   create_table "queries", force: :cascade do |t|
@@ -27,7 +24,6 @@ ActiveRecord::Schema.define(version: 20160720134055) do
   end
 
   add_index "queries", ["user_id"], name: "index_queries_on_user_id"
->>>>>>> tyrell
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false

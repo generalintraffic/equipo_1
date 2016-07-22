@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-  root 'mapa#index'
-
   devise_for :users
   root 'queries#index'
   get '/cars' => 'queries#search'

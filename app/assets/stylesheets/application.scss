@@ -9,6 +9,7 @@
  * compiled file so the styles you add here take precedence over styles defined in any styles
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
+ *= require 'L.Control.Sidebar'
  *
  */
 @import "bootstrap-sprockets";
@@ -16,7 +17,7 @@
 
 body{
 	background-image: url("gps-mejorado.jpg");
-	
+
 }
 
 .login{
@@ -39,4 +40,26 @@ body{
 .logo{
 	letter-spacing: -3px;
     font-size: 24px;
+}
+#map {
+    border-radius: 10px;
+    border: 8px solid gray;
+    margin-bottom: 20px;
+    position: absolute;
+    top: -10px;
+    bottom: 0;
+    padding-right: 1050px;
+    padding-bottom: 500px;
+ }
+.cero-margin{
+	margin-left: 0;
+	margin-right: 0;
+}
+#sidebar{
+	color: white;
+	border: 8px solid gray;
+    margin-right: -40px;
+    padding-bottom: 192px;
+    margin-top: -10px;
+    background-color: rgba(233, 30, 99, 0.61);
 }

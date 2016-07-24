@@ -26,7 +26,7 @@
            });
        function onMapClick(e) {
            console.log("latitud " + e.latlng);
-           // marker = L.marker(e.latlng,{icon:car,draggable:true,title:'origen'}).addTo(map);
+            //marker = L.marker(e.latlng,{icon:car,draggable:true,title:'origen'}).addTo(map);
        }
 
        map.on('click', onMapClick);
@@ -81,7 +81,7 @@
        map.on('draw:created', showPolygonArea);
        map.on('draw:edited', showPolygonAreaEdited);
 
-       var csvLayer = omnivore.csv('DATA', null, L.mapbox.featureLayer()).addTo(map);
+       var csvLayer = omnivore.csv('https://api.intraffic.com.ve/routing.geojson]', null, L.mapbox.featureLayer()).addTo(map);
 
        function showPolygonAreaEdited(e) {
          e.layers.eachLayer(function(layer) {
@@ -89,6 +89,10 @@
          });
        }
        function showPolygonArea(e) {
+           layer = e.layer;
+           var latlngs = (layer.getLatLngs());
+           var diagonal = [latlngs[1], latlngs[3]];
+            alert(diagonal);
          featureGroup.clearLayers();
          featureGroup.addLayer(e.layer);
          e.layer.bindPopup((LGeo.area(e.layer) / 1000000).toFixed(2) + ' km<sup>2</sup>');
@@ -98,21 +102,4 @@
                      feature.geometry.coordinates[1],
                      feature.geometry.coordinates[0]));
          });
-       }
-        //var RADIUS = 300;
-       //var filterCircle = L.circle(L.latLng(0, 0), RADIUS, {
-        //   opacity: 1,
-          // weight: 1,
-           //fillOpacity: 0.4,
-           //color: 'green'
-       //  }).addTo(map);
-
-
-       //map.on('click', function(e) {
-        //   filterCircle.setLatLng(e.latlng);
-          // csvLayer.setFilter(function showAirport(feature) {
-            //   return e.latlng.distanceTo(L.latLng(
-              //         feature.geometry.coordinates[1],
-                //       feature.geometry.coordinates[0])) < RADIUS;
-          // });
-       //});
+         }

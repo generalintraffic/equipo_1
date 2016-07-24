@@ -10,6 +10,7 @@
 #  routes     :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  positions  :string
 #
 
 require 'test_helper'

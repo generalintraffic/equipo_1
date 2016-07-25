@@ -23,6 +23,8 @@ class Query < ActiveRecord::Base
   serialize :routes, Array
 
   # Lógica para connsumir Api InTraffic
+  # require 'uri'
+  # require 'net/http'
   # cars_string = ''
   # cars_string = cars_string[0..cars_string.length-2]
 
@@ -52,9 +54,7 @@ class Query < ActiveRecord::Base
   end
 
   def get_vehicles_in_zone #entrada dos esquinas del bbox (self.area)
-    # require 'uri'
-    # require 'net/http'
-    url = URI('https://api.intraffic.com.ve/vehicles/get_vehicles_in_zone.json?bbox_corner_1=-66.91591,10.49988&bbox_corner_2=-66.90141,10.48926')
+    url = URI('https://api.intraffic.com.ve/vehicles/get_vehicles_in_zone.json?bbox_corner_1=-66.85607671737671,10.5022243393289794&bbox_corner_2=-66.844961643219,10.495154314023422')
     http = Net::HTTP.new(url.host, url.port)
     http.use_ssl = true
     http.verify_mode = OpenSSL::SSL::VERIFY_NONE
@@ -70,10 +70,10 @@ class Query < ActiveRecord::Base
     return self
   end
 
-  def get_vehicles_position #entrada varios vehicles_id (self.cars)
+  def get_vehicle_position #entrada varios vehicles_id (self.cars)
     url_base = 'https://api.intraffic.com.ve/vehicles/get_vehicle_position.json'
     self.cars.each do |car|
-      url = URI(url_base + '?vehicle_id='+ car)
+      url = URI(url_base +'?vehicle_id='+ car) 
       http = Net::HTTP.new(url.host, url.port)
       http.use_ssl = true
       http.verify_mode = OpenSSL::SSL::VERIFY_NONE
@@ -89,6 +89,8 @@ class Query < ActiveRecord::Base
     self.save
     return self
   end
+
+  #Este metodo no esta completo
 
   def get_vehicle_route #Entrada dos puntos extremos de la ruta (dos posiciones) (self.positions)
     url = URI("https://api.intraffic.com.ve/routing.json?points[]=-66.9067352,10.5047266&points[]=-66.9077437,10.5074273")

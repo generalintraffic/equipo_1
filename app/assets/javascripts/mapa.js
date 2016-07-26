@@ -1,6 +1,18 @@
 L.mapbox.accessToken = 'pk.eyJ1IjoiYXJnZWwyMCIsImEiOiJjaXFyZWI5aDkwMnc4ZnBubjRldjU1Zm1lIn0.zNLRT-KVO3rsfaAquFZK3w';
 var map = L.mapbox.map('map', 'mapbox.streets').setView([10.48815, -66.87653], 13);
 
+// var car = L.icon({
+//    iconUrl: 'assets/car.png',
+//    iconSize:     [20, 20],
+//     });
+// function onMapClick(e) {
+//     console.log("latitud " + e.latlng);
+//     marker = L.marker(e.latlng,{icon:car,draggable:true,title:'origen'}).addTo(map);
+// }
+//
+// map.on('click', onMapClick);
+//
+
 var myLines = {
     "type": "LineString",
     "coordinates": [[10.48815, -66.87653], [10.48830, -66.87670],

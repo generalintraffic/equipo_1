@@ -4,6 +4,7 @@ $(document).on('click', 'input', function () {
   var id = $(this).attr("id");
   console.log(id);
   $.ajax({
+  global: false,
  url: "/cars/"+id+"",
  data: {id_car:id}
 })

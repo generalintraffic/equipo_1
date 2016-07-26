@@ -24,9 +24,12 @@ map.on('draw:edited', showPolygonAreaEdited);
 function showPolygonAreaEdited(e) {
   e.layers.eachLayer(function(layer) {
     showPolygonArea({ layer: layer });
+
+
   });
 }
 function showPolygonArea(e) {
+    $(".item").remove()
     layer = e.layer;
     var latlngs = (layer.getLatLngs());
     var diagonal = JSON.stringify([latlngs[1], latlngs[3]]);

@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   root 'queries#index'
   post '/cars_in_zone' => 'queries#search'
   get '/cars/(:id)' => 'queries#simulation'
+  get '/show' => 'queries#show' #Ruta para probar JSONS
   
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

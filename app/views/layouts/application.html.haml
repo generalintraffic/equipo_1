@@ -9,12 +9,16 @@
     %script{:src => "https://api.mapbox.com/mapbox.js/plugins/leaflet-draw/v0.2.3/leaflet.draw.js"}
     %script{:src => "https://api.mapbox.com/mapbox.js/plugins/leaflet-geodesy/v0.1.0/leaflet-geodesy.js"}
     %script{:src => "https://api.mapbox.com/mapbox.js/plugins/leaflet-omnivore/v0.2.0/leaflet-omnivore.min.js"}
+    %script{:crossorigin => "anonymous", :integrity => "sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI=", :src => "https://code.jquery.com/jquery-2.2.4.js"}
     %script{:src => "assets/MovingMarker.js"}
+
+
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
     = csrf_meta_tags
 
   %body
     = render "partials/navigation"
+    = render "partials/loading"
     %p.notice= notice
     %p.alert= alert
     = yield

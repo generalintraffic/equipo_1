@@ -1,3 +1,9 @@
+$(document).ajaxStart(function(){
+     $('#cargando').show();
+   });
+   $(document).ajaxStop(function(){
+        $('#cargando').hide();
+      });
 var featureGroup = L.featureGroup().addTo(map);
 var drawControl = new L.Control.Draw({
   edit: {
@@ -15,7 +21,7 @@ var drawControl = new L.Control.Draw({
 map.on('draw:created', showPolygonArea);
 map.on('draw:edited', showPolygonAreaEdited);
 
-var csvLayer = omnivore.csv('https://api.intraffic.com.ve/routing.geojson', null, L.mapbox.featureLayer()).addTo(map);
+var csvLayer = omnivore.csv('https://api.intraffic.com.ve/routing .geojson', null, L.mapbox.featureLayer()).addTo(map);
 
 function showPolygonAreaEdited(e) {
   e.layers.eachLayer(function(layer) {
@@ -34,13 +40,17 @@ function showPolygonArea(e) {
    $.ajax({
   type: "POST",
   url: "/cars_in_zone.json",
-  data: {data1:diagonal},
+  data: {coordinates:diagonal},
   success:  function(data) {
     console.log(data)
    data.forEach(function(car_id) {
-          $("#sidebar").append(
-          '<div class="item" id="' + car_id + '">Vehicle ID ' + car_id +'</div>');
+
+        $("#sidebar").append(
+          '<div class="item" id="' + car_id + '">Vehicle ID ' + car_id +'</div>')
+          console.log($(".item"))
+          // $(".item").remove()
         });
+
     }
 });
 

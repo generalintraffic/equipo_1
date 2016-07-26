@@ -11,6 +11,7 @@
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  positions  :string
+#  token_time :date
 #
 
 class Query < ActiveRecord::Base
@@ -29,6 +30,30 @@ class Query < ActiveRecord::Base
   # cars_string = cars_string[0..cars_string.length-2]
 
   def get_token
+    if self.class.last != nil
+      if self.class.last.token_time != nil
+        @last_query = self.class.last
+        @last_token_time = @last_query.token_time
+        @now_time = (Time.current.in_time_zone('Caracas'))
+        @elapsed_seconds = @now_time - @last_token_time
+        if @elapsed_seconds <= 1600
+          self.get_previous_token
+        else
+          self.get_new_token
+        end
+      else
+        self.get_new_token
+      end
+    else
+      self.get_new_token
+    end
+  end
+
+  def get_previous_token
+    self.token = self.class.last.token
+  end
+
+  def get_new_token
     url = URI('https://api.intraffic.com.ve/oauth2/token')
     https = Net::HTTP.new(url.host,url.port)
     https.use_ssl = true
@@ -48,13 +73,17 @@ class Query < ActiveRecord::Base
     response = eval(req.read_body)
     @token = response[:access_token]
     self.token = @token
-    self.save
+    self.token_time = DateTime.now
     puts response
     return @token
   end
 
   def get_vehicles_in_zone #entrada dos esquinas del bbox (self.area)
-    url = URI('https://api.intraffic.com.ve/vehicles/get_vehicles_in_zone.json?bbox_corner_1=-66.85607671737671,10.5022243393289794&bbox_corner_2=-66.844961643219,10.495154314023422')
+    long1 = self.area[0]["lng"].to_s
+    lat1 = self.area[0]["lat"].to_s
+    long2 = self.area[1]["lng"].to_s
+    lat2 = self.area[1]["lat"].to_s
+    url = URI('https://api.intraffic.com.ve/vehicles/get_vehicles_in_zone.json?bbox_corner_1='+long1+','+lat1+'&bbox_corner_2='+long2+','+lat2)
     http = Net::HTTP.new(url.host, url.port)
     http.use_ssl = true
     http.verify_mode = OpenSSL::SSL::VERIFY_NONE
@@ -65,8 +94,6 @@ class Query < ActiveRecord::Base
     http_response = http.request(request)
     response = eval(http_response.read_body)
     self.cars = response
-    self.save
-    puts response
     return self
   end
 
@@ -86,7 +113,6 @@ class Query < ActiveRecord::Base
       self.positions.push(response)
       puts response
     end
-    self.save
     return self
   end
 

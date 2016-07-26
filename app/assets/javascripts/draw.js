@@ -34,7 +34,7 @@ function showPolygonArea(e) {
    $.ajax({
   type: "POST",
   url: "/cars_in_zone.json",
-  data: {data1:diagonal},
+  data: {coordinates:diagonal},
   success:  function(data) {
     console.log(data)
    data.forEach(function(car_id) {

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160724013738) do
+ActiveRecord::Schema.define(version: 20160726123827) do
 
   create_table "queries", force: :cascade do |t|
     t.integer  "user_id"
@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(version: 20160724013738) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string   "positions"
+    t.datetime "token_time"
   end
 
   add_index "queries", ["user_id"], name: "index_queries_on_user_id"

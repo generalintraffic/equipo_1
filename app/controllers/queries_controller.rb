@@ -3,6 +3,7 @@ class QueriesController < ApplicationController
   end
 
   def search
+    @body = params[:data1]
     @query = Query.new
     @query.get_token
     @query.get_vehicles_in_zone #con los parametros de Argel

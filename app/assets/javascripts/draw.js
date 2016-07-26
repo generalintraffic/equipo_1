@@ -25,7 +25,7 @@ function showPolygonAreaEdited(e) {
 function showPolygonArea(e) {
     layer = e.layer;
     var latlngs = (layer.getLatLngs());
-    var diagonal = [latlngs[1], latlngs[3]];
+    var diagonal = JSON.stringify([latlngs[1], latlngs[3]]);
      console.log(diagonal);
   featureGroup.clearLayers();
   featureGroup.addLayer(e.layer);
@@ -34,12 +34,12 @@ function showPolygonArea(e) {
    $.ajax({
   type: "POST",
   url: "/cars_in_zone.json",
+  data: {data1:diagonal},
   success:  function(data) {
-   console.log(data)
+    console.log(data)
    data.forEach(function(car_id) {
           $("#sidebar").append(
-          '<div class="item" id="' + car_id + '">CarName ' + car_id +'</div>');
-;
+          '<div class="item" id="' + car_id + '">Vehicle ID ' + car_id +'</div>');
         });
     }
 });
@@ -50,5 +50,3 @@ function showPolygonArea(e) {
               feature.geometry.coordinates[0]));
   });
   }
-
-route_marker = L.marker([element.geometry.coordinates[0][1], element.geometry.coordinates[0][0]],{draggable:true}).addTo(mymap)

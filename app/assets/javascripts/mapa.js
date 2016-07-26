@@ -34,19 +34,19 @@ marker1.once('click', function () {
 marker1.bindPopup('<b>Click me to start !</b>');
 marker1.openPopup();
 
-
-  var coord=[]
-  $.each(params,function(index,value){
-    coord.push('points[]'+(index+1))
-    coord.push(value.lng+','+value.lat)
-  });
-  console.log(coord)
-  $.ajax({
-  url: '/',
-  dataType: 'json',
-  method:'POST',
-  data: {points:coord},
-  success: (data) => {
-    settingGeojson(data)
-  }
-  });
+  //
+  // var coord=[]
+  // $.each(params,function(index,value){
+  //   coord.push('points[]'+(index+1))
+  //   coord.push(value.lng+','+value.lat)
+  // });
+  // console.log(coord)
+  // $.ajax({
+  // url: '/',
+  // dataType: 'json',
+  // method:'POST',
+  // data: {points:coord},
+  // success: (data) => {
+  //   settingGeojson(data)
+  // }
+  // });

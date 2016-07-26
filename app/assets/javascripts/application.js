@@ -13,6 +13,6 @@
 //= require jquery
 //= require bootstrap-sprockets
 //= require jquery_ujs
-//= require L.Control.Sidebar
-//= require turbolinks
-//= require_tree .
+//= require draw
+//= require  mapa1
+//= require  MovingMarker

@@ -11,8 +11,9 @@
 // about supported directives.
 //
 //= require jquery
+//= require  mapa
 //= require bootstrap-sprockets
 //= require jquery_ujs
 //= require draw
-//= require  mapa1
+//= require sidebar
 //= require  MovingMarker

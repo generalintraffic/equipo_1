@@ -17,15 +17,14 @@ class QueriesController < ApplicationController
     @query.area = @coordinates
     @query.get_vehicles_in_zone
     @query.save
-    @cars = @query.cars
-    render json: @cars #son solo los id
+    render json: @query  #son solo los id
   end
 
   # ¿Verificar con Argel paso de Id por params? ¿Post or get?
 
   def simulation_data
     @query = Query.find(params[:query_id])
-    @query.get_vehicle_position(params[:car_id])
+    @query.get_vehicle_position(params[:id])
     @query.get_route
     @query.save
     render json: @query.routes

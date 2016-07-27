@@ -1,17 +1,11 @@
 L.mapbox.accessToken = 'pk.eyJ1IjoiYXJnZWwyMCIsImEiOiJjaXFyZWI5aDkwMnc4ZnBubjRldjU1Zm1lIn0.zNLRT-KVO3rsfaAquFZK3w';
 var map = L.mapbox.map('map', 'mapbox.streets').setView([10.48815, -66.87653], 13);
 
-// var car = L.icon({
-//    iconUrl: 'assets/car.png',
-//    iconSize:     [20, 20],
-//     });
-// function onMapClick(e) {
-//     console.log("latitud " + e.latlng);
-//     marker = L.marker(e.latlng,{icon:car,draggable:true,title:'origen'}).addTo(map);
-// }
-//
-// map.on('click', onMapClick);
-//
+var car = L.icon({
+   iconUrl: 'assets/car.png',
+   iconSize:     [25, 25],
+    });
+
 
 var myLines = {
     "type": "LineString",
@@ -29,7 +23,7 @@ var partvenezuela = [[10.48815, -66.87653]];
 
 map.fitBounds(partvenezuela);
 
-var marker1 = L.Marker.movingMarker(myLines.coordinates, [10000,10000,10000]).addTo(map);
+var marker1 = L.Marker.movingMarker(myLines.coordinates, [10000,10000,10000], { icon: car }).addTo(map);
 L.polyline(myLines.coordinates).addTo(map);
 marker1.once('click', function () {
     marker1.start();

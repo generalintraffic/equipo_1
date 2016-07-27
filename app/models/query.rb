@@ -22,7 +22,7 @@ class Query < ActiveRecord::Base
   serialize :area, Array
   serialize :cars, Array
   serialize :positions, Array
-  serialize :routes, Array
+  serialize :routes
 
   # Lógica para connsumir Api InTraffic
 
@@ -142,7 +142,7 @@ class Query < ActiveRecord::Base
     request["cache-control"] = "no-cache"
     http_response = http.request(request)
     response = eval(http_response.read_body)
-    self.positions = response
+    self.positions.push(response) #cuando funcione hay que asignar y no pushear
     puts response
     return self
   end
@@ -153,7 +153,7 @@ class Query < ActiveRecord::Base
     lat1 = self.area[0]["lat"].to_s
     long2 = self.area[1]["lng"].to_s
     lat2 = self.area[1]["lat"].to_s
-    url = URI('https://api.intraffic.com.ve/routing.json?points[]='+long1+','+lat1+'&points[]='+long2+','+lat2)
+    url = URI('https://api.intraffic.com.ve/routing.geojson?points[]='+long1+','+lat1+'&points[]='+long2+','+lat2)
     http = Net::HTTP.new(url.host, url.port)
     http.use_ssl = true
     http.verify_mode = OpenSSL::SSL::VERIFY_NONE
@@ -162,9 +162,10 @@ class Query < ActiveRecord::Base
     request["authorization"] = "Bearer " + self.token
     request["cache-control"] = "no-cache"
     http_response = http.request(request)
-    response = eval(http_response.read_body)
+    puts http_response.read_body
+    response_string = http_response.read_body
+    response = JSON.parse(response_string)
     self.routes = response
-    puts response
     return self
   end
 

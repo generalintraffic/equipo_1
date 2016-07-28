@@ -13,6 +13,7 @@ var myvar='';
   success: function (response) {
     var  arrayCoordinates = []
     response.features.forEach(function(link) {
+      Data(link.properties)
       link.geometry.coordinates.forEach(function(coordinate) {
         arrayCoordinates.push(coordinate);
       })
@@ -21,4 +22,13 @@ var myvar='';
       // geojsonLayer = L.geoJson(response).addTo(map);
   }
 })
+
+function Data(data){
+  var myvar=data;
+  console.log(myvar);
+  $("#hola").append(
+  '<h3>Ultimo Reporte</h3><div class="item"> Vehicle ID ' + myvar +'</div>')
+
+}
+
 });

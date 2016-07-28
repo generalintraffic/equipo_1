@@ -47,7 +47,7 @@ function showPolygonArea(e) {
       // console.log(data)
       //     console.log(data.id)
       data.cars.forEach(function(car_id) {
-        $("#sidebar").append(
+        $("#vehicles").append(
         '<div class="item"> <input type="radio" query_id="' + data.id + '" id="' + car_id + '" name="  car ">Vehicle ID ' + car_id +'</div>')
           // console.log($(".item"))
       });

@@ -24,6 +24,6 @@ function Simulation(data){
       geojsonLayer = L.geoJson(myvar);
 
      var marker2 = L.Marker.movingMarker(myvar,
-         [3000, 9000, 9000, 4000], {autostart: true,icon: car}).addTo(map);
+         [3000, 9000, 9000, 4000,3000, 9000, 9000, 4000,3000, 9000, 9000, 4000,3000, 9000, 9000, 4000], {autostart: true,icon: car}).addTo(map);
      L.polyline(myvar, {color: 'red'}).addTo(map);
 };

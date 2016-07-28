@@ -150,8 +150,8 @@ class Query < ActiveRecord::Base
 
   def fixing_routes
     @routes = self.routes
-    @routes.features.each do |route|
-      route.geometry.coordinates.each do |coordinate|
+    @routes["features"].each do |route|
+      route["geometry"]["coordinates"].each do |coordinate|
         mem = coordinate[1]
         coordinate[1] = coordinate[0]
         coordinate[0] = mem

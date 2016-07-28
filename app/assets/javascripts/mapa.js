@@ -22,23 +22,23 @@ var myStyle = {
 var partvenezuela = [[10.48815, -66.87653]];
 
 map.fitBounds(partvenezuela);
-
-var marker1 = L.Marker.movingMarker(myLines.coordinates, [10000,10000,10000], { icon: car }).addTo(map);
-L.polyline(myLines.coordinates).addTo(map);
-marker1.once('click', function () {
-    marker1.start();
-    marker1.on('click', function() {
-        if (marker1.isRunning()) {
-            marker1.pause();
-        } else {
-            marker1.start();
-        }
-    });
-    setTimeout(function() {
-    }, 2000);
-});
-marker1.bindPopup('<b>Click me to start !</b>');
-marker1.openPopup();
+//
+// var marker1 = L.Marker.movingMarker(myLines.coordinates, [10000,10000,10000], { icon: car }).addTo(map);
+// L.polyline(myLines.coordinates).addTo(map);
+// marker1.once('click', function () {
+//     marker1.start();
+//     marker1.on('click', function() {
+//         if (marker1.isRunning()) {
+//             marker1.pause();
+//         } else {
+//             marker1.start();
+//         }
+//     });
+//     setTimeout(function() {
+//     }, 2000);
+// });
+// marker1.bindPopup('<b>Click me to start !</b>');
+// marker1.openPopup();
 
   //
   // var coord=[]

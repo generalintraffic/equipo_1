@@ -2,15 +2,17 @@
 #
 # Table name: queries
 #
-#  id         :integer          not null, primary key
-#  user_id    :integer
-#  token      :string
-#  area       :string
-#  cars       :string
-#  routes     :string
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#  positions  :string
+#  id           :integer          not null, primary key
+#  user_id      :integer
+#  token        :string
+#  area         :string
+#  cars         :string
+#  routes       :string
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  positions    :string
+#  token_time   :datetime
+#  selected_car :string
 #
 
 class Query < ActiveRecord::Base
@@ -20,15 +22,36 @@ class Query < ActiveRecord::Base
   serialize :area, Array
   serialize :cars, Array
   serialize :positions, Array
-  serialize :routes, Array
+  serialize :routes
 
   # Lógica para connsumir Api InTraffic
-  # require 'uri'
-  # require 'net/http'
-  # cars_string = ''
-  # cars_string = cars_string[0..cars_string.length-2]
 
   def get_token
+    if self.class.last != nil
+      if self.class.last.token_time != nil
+        @last_query = self.class.last
+        @last_token_time = @last_query.token_time
+        @now_time = (Time.current.in_time_zone('Caracas'))
+        @elapsed_seconds = @now_time - @last_token_time
+        if @elapsed_seconds <= 1600
+          self.get_previous_token
+        else
+          self.get_new_token
+        end
+      else
+        self.get_new_token
+      end
+    else
+      self.get_new_token
+    end
+  end
+
+  def get_previous_token
+    self.token = self.class.last.token
+    self.token_time = self.class.last.token_time
+  end
+
+  def get_new_token
     url = URI('https://api.intraffic.com.ve/oauth2/token')
     https = Net::HTTP.new(url.host,url.port)
     https.use_ssl = true
@@ -48,13 +71,26 @@ class Query < ActiveRecord::Base
     response = eval(req.read_body)
     @token = response[:access_token]
     self.token = @token
-    self.save
+    self.token_time = DateTime.now
     puts response
     return @token
   end
 
-  def get_vehicles_in_zone #entrada dos esquinas del bbox (self.area)
-    url = URI('https://api.intraffic.com.ve/vehicles/get_vehicles_in_zone.json?bbox_corner_1=-66.85607671737671,10.5022243393289794&bbox_corner_2=-66.844961643219,10.495154314023422')
+  def check_token
+    @now_time = (Time.current.in_time_zone('Caracas'))
+    @elapsed_seconds = @now_time - self.token_time
+    if @elapsed_seconds >= 1600
+      self.get_new_token
+    end
+  end
+
+  def get_vehicles_in_zone
+    self.check_token
+    long1 = self.area[0]["lng"].to_s
+    lat1 = self.area[0]["lat"].to_s
+    long2 = self.area[1]["lng"].to_s
+    lat2 = self.area[1]["lat"].to_s
+    url = URI('https://api.intraffic.com.ve/vehicles/get_vehicles_in_zone.json?bbox_corner_1='+long1+','+lat1+'&bbox_corner_2='+long2+','+lat2)
     http = Net::HTTP.new(url.host, url.port)
     http.use_ssl = true
     http.verify_mode = OpenSSL::SSL::VERIFY_NONE
@@ -65,35 +101,59 @@ class Query < ActiveRecord::Base
     http_response = http.request(request)
     response = eval(http_response.read_body)
     self.cars = response
-    self.save
+    return self
+  end
+
+  #Varios vehiculos
+
+  # def get_vehicles_position #Siempre obtiene las mismas coordenadas
+  #   url_base = 'https://api.intraffic.com.ve/vehicles/get_vehicle_position.json/?vehicle_id='
+  #   self.cars.each do |car|
+  #     url = URI(url_base + car) 
+  #     http = Net::HTTP.new(url.host, url.port)
+  #     http.use_ssl = true
+  #     http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+  #     request = Net::HTTP::Get.new(url)
+  #     request["user-agent"] = "develop"
+  #     request["authorization"] = "Bearer " + self.token
+  #     request["content-type"] = "application/x-www-form-urlencoded;charset=UTF-8"
+  #     request["cache-control"] = "no-cache"
+  #     http_response = http.request(request)
+  #     response = eval(http_response.read_body)
+  #     self.positions.push(response)
+  #     puts response
+  #   end
+  #   return self
+  # end
+
+  #Un solo vehiculo
+
+  def get_vehicle_position(vehicle_id) #ERROR API INTRAFFIC Siempre obtiene las mismas coordenadas
+    self.check_token
+    self.selected_car = vehicle_id
+    url = URI('https://api.intraffic.com.ve/vehicles/get_vehicle_position.json/?vehicle_id=' + vehicle_id) 
+    http = Net::HTTP.new(url.host, url.port)
+    http.use_ssl = true
+    http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+    request = Net::HTTP::Get.new(url)
+    request["user-agent"] = "develop"
+    request["authorization"] = "Bearer " + self.token
+    request["content-type"] = "application/x-www-form-urlencoded;charset=UTF-8"
+    request["cache-control"] = "no-cache"
+    http_response = http.request(request)
+    response = eval(http_response.read_body)
+    self.positions.push(response) #cuando funcione hay que asignar y no pushear
     puts response
     return self
   end
 
-  def get_vehicle_position #entrada varios vehicles_id (self.cars)
-    url_base = 'https://api.intraffic.com.ve/vehicles/get_vehicle_position.json'
-    self.cars.each do |car|
-      url = URI(url_base +'?vehicle_id='+ car) 
-      http = Net::HTTP.new(url.host, url.port)
-      http.use_ssl = true
-      http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-      request = Net::HTTP::Get.new(url)
-      request["user-agent"] = "develop"
-      request["authorization"] = "Bearer " + self.token
-      request["cache-control"] = "no-cache"
-      http_response = http.request(request)
-      response = eval(http_response.read_body)
-      self.positions.push(response)
-      puts response
-    end
-    self.save
-    return self
-  end
-
-  #Este metodo no esta completo
-
-  def get_vehicle_route #Entrada dos puntos extremos de la ruta (dos posiciones) (self.positions)
-    url = URI("https://api.intraffic.com.ve/routing.json?points[]=-66.9067352,10.5047266&points[]=-66.9077437,10.5074273")
+  def get_route #Falta arreglar para utilice self.positions
+    self.check_token
+    long1 = self.area[0]["lng"].to_s
+    lat1 = self.area[0]["lat"].to_s
+    long2 = self.area[1]["lng"].to_s
+    lat2 = self.area[1]["lat"].to_s
+    url = URI('https://api.intraffic.com.ve/routing.geojson?points[]='+long1+','+lat1+'&points[]='+long2+','+lat2)
     http = Net::HTTP.new(url.host, url.port)
     http.use_ssl = true
     http.verify_mode = OpenSSL::SSL::VERIFY_NONE
@@ -101,8 +161,12 @@ class Query < ActiveRecord::Base
     request["user-agent"] = "develop"
     request["authorization"] = "Bearer " + self.token
     request["cache-control"] = "no-cache"
-    response = http.request(request)
-    puts response.read_body
+    http_response = http.request(request)
+    puts http_response.read_body
+    response_string = http_response.read_body
+    response = JSON.parse(response_string)
+    self.routes = response
+    return self
   end
 
 end

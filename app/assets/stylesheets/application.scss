@@ -42,11 +42,11 @@ body{
     margin-top: -20px;
     background-position: center;
     background-repeat: no-repeat ;
-    background-color: rgba(243, 232, 225, 0.74); 
+    background-color: rgba(243, 232, 225, 0.74);
     width: 100%;
-    height: 100%; 
+    height: 100%;
     position: fixed;
-    background-image: url("loading.gif");
+    background-image: url("loading.gif") ;
     z-index: 1000;
 }
 

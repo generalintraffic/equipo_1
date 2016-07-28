@@ -16,7 +16,7 @@
 @import "bootstrap";
 
 body{
-	background-image: url("gps-mejorado.jpg");
+	background-color: rgba(252, 250, 208, 0.25); 
 
 }
 #cargado{
@@ -42,12 +42,12 @@ body{
     margin-top: -20px;
     background-position: center;
     background-repeat: no-repeat ;
-    background-color: rgba(243, 232, 225, 0.74);
+    background-color: #e7e7e7;
     width: 100%;
     height: 100%;
     position: fixed;
     background-image: url("loading.gif") ;
-    z-index: 1000;
+    z-index: 999999999999999999;
 }
 
 .login{
@@ -85,19 +85,25 @@ body{
 	margin-left: 0;
 	margin-right: 0;
 }
-#sidebar{
-	color: white;
-	border: 8px solid gray;
+
+#sidebar {
+    max-height: 516px;
+    overflow-y: auto;
+    position: relative;
+    color: white;
+    border: 8px solid gray;
     margin-right: -40px;
-    padding-bottom: 192px;
     margin-top: -10px;
     background-color: rgba(233, 30, 99, 0.61);
+    height: 516px;
 }
-.item {
-    border:1px, solid;
-    padding:2px;
-    margin:2px;
-    background-color:rgba(100, 100, 255, 0.5);
+
+.item 
+{
+    padding: 2px;
+    margin-top: 14px;
+    background-color: rgba(100, 100, 255, 0.5);
+    border-radius: 15px;
 }
 .active {
     background-color:rgba(100, 100, 255, 0.9);

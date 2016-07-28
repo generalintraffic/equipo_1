@@ -11,19 +11,14 @@ var myvar='';
   method:'POST',
   data: {query_id:query},
   success: function (response) {
-
-      response.features.forEach(function(c) {
-       Data(c.properties);
-      Simulation(c.geometry);
+    var  arrayCoordinates = []
+    response.features.forEach(function(link) {
+      link.geometry.coordinates.forEach(function(coordinate) {
+        arrayCoordinates.push(coordinate);
+      })
     })
-
-
-        // geojsonLayer = L.geoJson(response).addTo(map);
-    }
-  })
-  function Data(data){
-    var myvar=data;
-    console.log(myvar);
-
+    Simulation(arrayCoordinates)
+      // geojsonLayer = L.geoJson(response).addTo(map);
   }
+})
 });

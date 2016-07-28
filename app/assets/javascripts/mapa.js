@@ -16,15 +16,14 @@ var partvenezuela = [[10.48815, -66.87653]];
 
 map.fitBounds(partvenezuela);
 
+
 function Simulation(data){
     myvar = data;
     // console.log(myvar);
 
       geojsonLayer = L.geoJson(myvar);
 
-     var marker2 = L.Marker.movingMarker(myvar.coordinates,
+     var marker2 = L.Marker.movingMarker(myvar,
          [3000, 9000, 9000, 4000], {autostart: true,icon: car}).addTo(map);
-     L.polyline(myvar.coordinates, {color: 'red'}).addTo(map);
-
-
+     L.polyline(myvar, {color: 'red'}).addTo(map);
 };

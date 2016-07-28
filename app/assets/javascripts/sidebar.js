@@ -6,14 +6,15 @@ $(document).on('click', 'input', function () {
   // console.log(id);
   // console.log(query);
 var myvar='';
+var traffic='';
   $.ajax({
   url: "/cars/"+id,
   method:'POST',
   data: {query_id:query},
   success: function (response) {
+    Data(response)
     var  arrayCoordinates = []
     response.features.forEach(function(link) {
-      Data(link.properties)
       link.geometry.coordinates.forEach(function(coordinate) {
         arrayCoordinates.push(coordinate);
       })
@@ -24,10 +25,21 @@ var myvar='';
 })
 
 function Data(data){
-  var myvar=data;
-  console.log(myvar);
-  $("#hola").append(
-  '<h3>Ultimo Reporte</h3><div class="item"> Vehicle ID ' + myvar +'</div>')
+  myvar = data
+  L.geoJson(myvar, {
+         style: function(feature) {
+             var traffic = (feature.properties.rt_travel_time)/(feature.properties.free_travel_time)
+
+          if(traffic <= 1.3){
+                      return {color: "green",weight:5,opacity:1};
+          }else if(traffic <=1.7){
+                      return {color: "orange",weight:5,opacity:1};
+          }else if(traffic > 1.7){
+              return {color: "red",weight:5,opacity:1};
+          }
+         }
+}).addTo(map);
+
 
 }
 

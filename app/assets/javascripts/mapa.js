@@ -21,7 +21,7 @@ function Simulation(data){
     myvar = data;
     // console.log(myvar);
 
-      geojsonLayer = L.geoJson(myvar);
+      // geojsonLayer = L.geoJson(myvar);
 
      var marker2 = L.Marker.movingMarker(myvar,
          [3000, 9000, 9000, 4000,3000, 9000, 9000, 4000,3000, 9000, 9000, 4000,3000, 9000, 9000, 4000], {autostart: true,icon: car}).addTo(map);

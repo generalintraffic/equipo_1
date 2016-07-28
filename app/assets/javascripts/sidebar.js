@@ -11,6 +11,8 @@ var myvar='';
   method:'POST',
   data: {query_id:query},
   success: function (response) {
+    console.log("hola")
+    console.log(response)
     var  arrayCoordinates = []
     response.features.forEach(function(link) {
       Data(link.properties)
@@ -23,11 +25,19 @@ var myvar='';
   }
 })
 
+
 function Data(data){
   var myvar=data;
-  console.log(myvar);
+  var d = new Date(data.updated_at);
+  var ultimoReporte = d.getDate()+"/"+d.getMonth()+" "+d.getHours().toString() + ":" + d.getMinutes().toString() + ":" + d.getSeconds().toString();
+  var speed = data.speed.toString()+" Km/h";
+  var sinTrafico = data.free_travel_time.toString()+" minutos";
+  var conTrafico = data.rt_travel_time.toString()+" minutos";
+  //console.log(d)
+  //console.log(ultimoReporte)
+
   $("#hola").append(
-  '<h3>Ultimo Reporte</h3><div class="item"> Vehicle ID ' + myvar +'</div>')
+  '<h3>Ultimo Reporte</h3><div class="item">' + ultimoReporte +'</div><h4>Velocidad</h3><div class="item">' + speed +'</div><h4>Viaje sin trafico</h4><div class="item">' + sinTrafico +'</div><h4>Viaje con Trafico</h3><div class="item">' + conTrafico +'</div>')
 
 }
 

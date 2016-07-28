@@ -104,30 +104,6 @@ class Query < ActiveRecord::Base
     return self
   end
 
-  #Varios vehiculos
-
-  # def get_vehicles_position #Siempre obtiene las mismas coordenadas
-  #   url_base = 'https://api.intraffic.com.ve/vehicles/get_vehicle_position.json/?vehicle_id='
-  #   self.cars.each do |car|
-  #     url = URI(url_base + car) 
-  #     http = Net::HTTP.new(url.host, url.port)
-  #     http.use_ssl = true
-  #     http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-  #     request = Net::HTTP::Get.new(url)
-  #     request["user-agent"] = "develop"
-  #     request["authorization"] = "Bearer " + self.token
-  #     request["content-type"] = "application/x-www-form-urlencoded;charset=UTF-8"
-  #     request["cache-control"] = "no-cache"
-  #     http_response = http.request(request)
-  #     response = eval(http_response.read_body)
-  #     self.positions.push(response)
-  #     puts response
-  #   end
-  #   return self
-  # end
-
-  #Un solo vehiculo
-
   def get_vehicle_position(vehicle_id) #ERROR API INTRAFFIC Siempre obtiene las mismas coordenadas
     self.check_token
     self.selected_car = vehicle_id
@@ -166,7 +142,45 @@ class Query < ActiveRecord::Base
     response_string = http_response.read_body
     response = JSON.parse(response_string)
     self.routes = response
+    self.fixing_routes
     return self
   end
 
+  #metodo para 
+
+  def fixing_routes
+    @routes = self.routes
+    @routes.features.each do |route|
+      route.geometry.coordinates.each do |coordinate|
+        mem = coordinate[1]
+        coordinate[1] = coordinate[0]
+        coordinate[0] = mem
+      end
+    end
+  end
+
 end
+
+  #Varios vehiculos
+
+  # def get_vehicles_position #Siempre obtiene las mismas coordenadas
+  #   url_base = 'https://api.intraffic.com.ve/vehicles/get_vehicle_position.json/?vehicle_id='
+  #   self.cars.each do |car|
+  #     url = URI(url_base + car) 
+  #     http = Net::HTTP.new(url.host, url.port)
+  #     http.use_ssl = true
+  #     http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+  #     request = Net::HTTP::Get.new(url)
+  #     request["user-agent"] = "develop"
+  #     request["authorization"] = "Bearer " + self.token
+  #     request["content-type"] = "application/x-www-form-urlencoded;charset=UTF-8"
+  #     request["cache-control"] = "no-cache"
+  #     http_response = http.request(request)
+  #     response = eval(http_response.read_body)
+  #     self.positions.push(response)
+  #     puts response
+  #   end
+  #   return self
+  # end
+
+  #Un solo vehiculo

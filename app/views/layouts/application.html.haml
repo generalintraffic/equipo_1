@@ -19,7 +19,7 @@
   %body
     = render "partials/navigation"
     = render "partials/loading"
-    %p.notice= notice
-    %p.alert= alert
+    %p.notice.alert-info.alert-edit= notice
+    %p.notice.alert-success.alert-edit= alert
     = yield
     = javascript_include_tag 'application', 'data-turbolinks-track' => true

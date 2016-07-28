@@ -17,8 +17,7 @@ class QueriesController < ApplicationController
     @query.area = @coordinates
     @query.get_vehicles_in_zone
     @query.save
-    @cars = @query.cars
-    render json: @cars #son solo los id
+    render json: @query  #son solo los id
   end
 
   # ¿Verificar con Argel paso de Id por params? ¿Post or get?

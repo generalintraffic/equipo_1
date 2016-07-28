@@ -25,7 +25,7 @@ class QueriesController < ApplicationController
 
   def simulation_data
     @query = Query.find(params[:query_id])
-    @query.get_vehicle_position(params[:car_id])
+    @query.get_vehicle_position(params[:id])
     @query.get_route
     @query.save
     render json: @query.routes

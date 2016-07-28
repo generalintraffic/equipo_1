@@ -50,7 +50,6 @@ function showPolygonArea(e) {
         $("#sidebar").append(
         '<div class="item"> <input type="radio" query_id="' + data.id + '" id="' + car_id + '" name="  car ">Vehicle ID ' + car_id +'</div>')
           // console.log($(".item"))
-          // $(".item").remove()
       });
     }
   });

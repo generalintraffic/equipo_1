@@ -107,7 +107,7 @@ class Query < ActiveRecord::Base
   def get_vehicle_position(vehicle_id) #ERROR API INTRAFFIC Siempre obtiene las mismas coordenadas
     self.check_token
     self.selected_car = vehicle_id
-    url = URI('https://api.intraffic.com.ve/vehicles/get_vehicle_position.json/?vehicle_id=' + vehicle_id) 
+    url = URI('https://api.intraffic.com.ve/vehicles/get_vehicle_position.json/?vehicle_id=' + vehicle_id)
     http = Net::HTTP.new(url.host, url.port)
     http.use_ssl = true
     http.verify_mode = OpenSSL::SSL::VERIFY_NONE
@@ -146,7 +146,7 @@ class Query < ActiveRecord::Base
     return self
   end
 
-  #metodo para 
+  #metodo para
 
   def fixing_routes
     @routes = self.routes
@@ -166,7 +166,7 @@ end
   # def get_vehicles_position #Siempre obtiene las mismas coordenadas
   #   url_base = 'https://api.intraffic.com.ve/vehicles/get_vehicle_position.json/?vehicle_id='
   #   self.cars.each do |car|
-  #     url = URI(url_base + car) 
+  #     url = URI(url_base + car)
   #     http = Net::HTTP.new(url.host, url.port)
   #     http.use_ssl = true
   #     http.verify_mode = OpenSSL::SSL::VERIFY_NONE

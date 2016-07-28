@@ -13,6 +13,7 @@ var myvar='';
   success: function (response) {
 
       response.features.forEach(function(c) {
+       Data(c.properties);
       Simulation(c.geometry);
     })
 
@@ -20,17 +21,9 @@ var myvar='';
         // geojsonLayer = L.geoJson(response).addTo(map);
     }
   })
+  function Data(data){
+    var myvar=data;
+    console.log(myvar);
+
+  }
 });
-
-function Simulation(data){
-    myvar = data;
-    // console.log(myvar);
-
-      geojsonLayer = L.geoJson(myvar);
-
-     var marker2 = L.Marker.movingMarker(myvar.coordinates,
-         [3000, 9000, 9000, 4000], {autostart: true,icon: car}).addTo(map);
-     L.polyline(myvar.coordinates, {color: 'red'}).addTo(map);
-
-
-};

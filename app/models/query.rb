@@ -142,7 +142,7 @@ class Query < ActiveRecord::Base
     response_string = http_response.read_body
     response = JSON.parse(response_string)
     self.routes = response
-    self.fixing_routes
+    # self.fixing_routes
     return self
   end
 

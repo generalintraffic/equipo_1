@@ -12,7 +12,7 @@ var traffic='';
   method:'POST',
   data: {query_id:query},
   success: function (response) {
-    Data(response)
+    pruebaPaintTraffic(response)
     var  arrayCoordinates = []
     response.features.forEach(function(link) {
       link.geometry.coordinates.forEach(function(coordinate) {
@@ -24,7 +24,7 @@ var traffic='';
   }
 })
 
-function Data(data){
+function pruebaPaintTraffic(data){
   myvar = data
   L.geoJson(myvar, {
          style: function(feature) {

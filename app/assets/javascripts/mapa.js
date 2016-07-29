@@ -24,7 +24,6 @@ function Simulation(data){
       arrayCoordinates.push(coordinate);
     })
     })
-    console.log(arrayCoordinates);
     myvar = data;
     var myStyle = function(feature) {
         var traffic = (feature.properties.rt_travel_time)/(feature.properties.free_travel_time)
@@ -40,12 +39,13 @@ function Simulation(data){
             style: myStyle
        }).addTo(map);
 // -----ANIMACION FLUIDA PERO APARECE EN LA ANTARTIDA----------------------
+
       //  var marker2 = L.Marker.movingMarker(arrayCoordinates,
       //      [3000, 9000, 9000, 4000], {autostart: true,icon: car}).addTo(map);
+
 // -----ANIMACION NO FLUIDA PERO APARECE BIEN EN LA RUTA  comentar self.fixing_routes en el model----------------------
   var j = 0;
 
-  // Create a marker and add it to the map.
   var marker = L.marker([0, 0], {
     icon:car
   }).addTo(map);
@@ -55,8 +55,6 @@ function Simulation(data){
           arrayCoordinates[j][1],
           arrayCoordinates[j][0]));
 
-      // Move to the next point of the line
-      // until `j` reaches the length of the array.
       if (++j < arrayCoordinates.length) setTimeout(tick, 1000);
   }
 

@@ -142,7 +142,9 @@ class Query < ActiveRecord::Base
     response_string = http_response.read_body
     response = JSON.parse(response_string)
     self.routes = response
-    # self.fixing_routes
+
+    self.fixing_routes
+    self.adding_miliseconds
     return self
   end
 
@@ -150,12 +152,19 @@ class Query < ActiveRecord::Base
 
   def fixing_routes
     @routes = self.routes
-    @routes["features"].each do |route|
-      route["geometry"]["coordinates"].each do |coordinate|
+    @routes["features"].each do |link|
+      link["geometry"]["coordinates"].each do |coordinate|
         mem = coordinate[1]
         coordinate[1] = coordinate[0]
         coordinate[0] = mem
       end
+    end
+  end
+
+  def adding_miliseconds
+    @route = self.routes
+    @routes["features"].each do |link|
+      link["properties"]["speed_miliseconds"] = link["properties"]["rt_travel_time"]*1000
     end
   end
 

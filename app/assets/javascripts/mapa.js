@@ -27,6 +27,9 @@ function Simulation(data){
     myvar = data;
     var myStyle = function(feature) {
         var traffic = (feature.properties.rt_travel_time)/(feature.properties.free_travel_time)
+        time = feature.properties.rt_travel_time
+        miliseco = feature.properties.speed_miliseconds
+        console.log(miliseco);
      if(traffic <= 1.3){
                  return {color: "green",weight:5,opacity:1};
      }else if(traffic <=1.7){
@@ -40,24 +43,27 @@ function Simulation(data){
        }).addTo(map);
 // -----ANIMACION FLUIDA PERO APARECE EN LA ANTARTIDA----------------------
 
-      //  var marker2 = L.Marker.movingMarker(arrayCoordinates,
-      //      [3000, 9000, 9000, 4000], {autostart: true,icon: car}).addTo(map);
+       var marker2 = L.Marker.movingMarker(arrayCoordinates,
+           miliseco, {autostart: true,icon: car}).addTo(map);
 
 // -----ANIMACION NO FLUIDA PERO APARECE BIEN EN LA RUTA  comentar self.fixing_routes en el model----------------------
-  var j = 0;
+  // var j = 0;
+  //
+  // var marker = L.marker([0, 0], {
+  //   icon:car
+  // }).addTo(map);
+  //
+  // function tick() {
+  //     marker.setLatLng(L.latLng(
+  //         arrayCoordinates[j][1],
+  //         arrayCoordinates[j][0]));
+  //
+  //     if (++j < arrayCoordinates.length) setTimeout(tick, 1000);
+  // }
+  //
+  // tick();
 
-  var marker = L.marker([0, 0], {
-    icon:car
-  }).addTo(map);
-
-  function tick() {
-      marker.setLatLng(L.latLng(
-          arrayCoordinates[j][1],
-          arrayCoordinates[j][0]));
-
-      if (++j < arrayCoordinates.length) setTimeout(tick, 1000);
-  }
-
-  tick();
+      marker2.bindPopup('<b>Time '+time+ ' minutos!</b>', {closeOnClick: false})
+      marker2.openPopup();
 
 }

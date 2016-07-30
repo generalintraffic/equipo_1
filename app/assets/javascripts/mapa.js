@@ -20,7 +20,7 @@ map.fitBounds(partvenezuela);
 function Simulation(data){
   var  arrayCoordinates = []
   data.features.forEach(function(link) {
-      link.geometry.coordinates.forEach(function(coordinate) {
+      link.geometry.lat_long.forEach(function(coordinate) {
       arrayCoordinates.push(coordinate);
     })
     })
@@ -28,8 +28,8 @@ function Simulation(data){
     var myStyle = function(feature) {
         var traffic = (feature.properties.rt_travel_time)/(feature.properties.free_travel_time)
         time = feature.properties.rt_travel_time
-        miliseco = feature.properties.speed_miliseconds
-        console.log(miliseco);
+        miliseconds = feature.properties.speed_miliseconds
+        console.log(miliseconds);
      if(traffic <= 1.3){
                  return {color: "green",weight:5,opacity:1};
      }else if(traffic <=1.7){
@@ -44,7 +44,7 @@ function Simulation(data){
 // -----ANIMACION FLUIDA PERO APARECE EN LA ANTARTIDA----------------------
 
        var marker2 = L.Marker.movingMarker(arrayCoordinates,
-           miliseco, {autostart: true,icon: car}).addTo(map);
+           miliseconds, {autostart: true,icon: car}).addTo(map);
 
 // -----ANIMACION NO FLUIDA PERO APARECE BIEN EN LA RUTA  comentar self.fixing_routes en el model----------------------
   // var j = 0;
@@ -62,8 +62,11 @@ function Simulation(data){
   // }
   //
   // tick();
-
+  marker2.on('end', function() {
       marker2.bindPopup('<b>Time '+time+ ' minutos!</b>', {closeOnClick: false})
       marker2.openPopup();
+    
+  });
+
 
 }

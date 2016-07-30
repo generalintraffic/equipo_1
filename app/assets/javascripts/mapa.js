@@ -65,8 +65,12 @@ function Simulation(data){
   marker2.on('end', function() {
       marker2.bindPopup('<b>Time '+time+ ' minutos!</b>', {closeOnClick: false})
       marker2.openPopup();
-    
+
   });
 
 
 }
+$('#clear').on('click', function(){
+
+  location.reload()
+});

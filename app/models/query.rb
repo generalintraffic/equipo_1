@@ -180,7 +180,7 @@ class Query < ActiveRecord::Base
   def adding_miliseconds
     @route = self.routes
     @routes["features"].each do |link|
-      link["properties"]["speed_miliseconds"] = link["properties"]["rt_travel_time"]*1000
+      link["properties"]["speed_miliseconds"] = link["properties"]["rt_travel_time"]*10000
     end
   end
 

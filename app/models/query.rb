@@ -163,12 +163,12 @@ class Query < ActiveRecord::Base
   def fixing_routes
     @routes = self.routes
     @routes["features"].each do |link|
-      link["geometry"]["lat-long"]=[]
+      link["geometry"]["lat_long"]=[]
       link["geometry"]["coordinates"].each do |coordinate|
         aux_array = []
         aux_array[0] = coordinate[1]
         aux_array[1] = coordinate[0]
-        link["geometry"]["lat-long"].push(aux_array)
+        link["geometry"]["lat_long"].push(aux_array)
       end
     end
   end
@@ -178,7 +178,7 @@ class Query < ActiveRecord::Base
   def adding_miliseconds
     @route = self.routes
     @routes["features"].each do |link|
-      link["properties"]["speed_miliseconds"] = link["properties"]["rt_travel_time"]*1000
+      link["properties"]["speed_miliseconds"] = link["properties"]["rt_travel_time"]*10000
     end 
   end
 

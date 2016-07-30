@@ -17,10 +17,14 @@ class QueriesController < ApplicationController
     @query.area = @coordinates
     @query.get_vehicles_in_zone
     @query.save
+    puts current_user
+    if current_user != nil
+      @user = current_user
+      @user.queries.push(@query)
+      @user.save
+    end
     render json: @query  #son solo los id
   end
-
-  # ¿Verificar con Argel paso de Id por params? ¿Post or get?
 
   def simulation_data
     @query = Query.find(params[:query_id])
@@ -28,6 +32,12 @@ class QueriesController < ApplicationController
     @query.get_route
     @query.save
     render json: @query.routes
+  end
+
+  private
+
+  def query_params
+    params.require(:query).permit(:id, :query_id, :coordinates)
   end
 
 end

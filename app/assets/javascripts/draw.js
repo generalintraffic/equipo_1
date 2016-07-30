@@ -29,6 +29,7 @@ function showPolygonAreaEdited(e) {
   });
 }
 function showPolygonArea(e) {
+
   $(".item").remove()
   layer = e.layer;
   var latlngs = (layer.getLatLngs());
@@ -47,10 +48,11 @@ function showPolygonArea(e) {
       // console.log(data)
       //     console.log(data.id)
       data.cars.forEach(function(car_id) {
-        $("#sidebar").append(
+        $("#vehicles").append(
         '<div class="item"> <input type="radio" query_id="' + data.id + '" id="' + car_id + '" name="  car ">Vehicle ID ' + car_id +'</div>')
+        $(".erase").remove()
+
           // console.log($(".item"))
-          // $(".item").remove()
       });
     }
   });

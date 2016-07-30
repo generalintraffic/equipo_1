@@ -3,34 +3,26 @@ $(document).on('click', 'input', function () {
   $(this).addClass('active');
   var id = $(this).attr("id");
   var query = $(this).attr("query_id");
-  // console.log(id);
-  // console.log(query);
 var myvar='';
+var traffic='';
   $.ajax({
   url: "/cars/"+id,
   method:'POST',
   data: {query_id:query},
   success: function (response) {
+    // Data(response)
+    Simulation(response)
+    Data(response.features[0].properties)
 
-      response.features.forEach(function(c) {
-      Simulation(c.geometry);
-    })
+  }
+})
 
+function Data(data){
+  var d = new Date(data.updated_at);
+  var ultimoReporte = d.getDate()+"/"+d.getMonth()+" "+d.getHours().toString() + ":" + d.getMinutes().toString() + ":" + d.getSeconds().toString();
 
-        // geojsonLayer = L.geoJson(response).addTo(map);
-    }
-  })
-});
-
-function Simulation(data){
-    myvar = data;
-    // console.log(myvar);
-
-      geojsonLayer = L.geoJson(myvar);
-
-     var marker2 = L.Marker.movingMarker(myvar.coordinates,
-         [3000, 9000, 9000, 4000], {autostart: true,icon: car}).addTo(map);
-     L.polyline(myvar.coordinates, {color: 'red'}).addTo(map);
-
-
+  $("#hola").append(
+  '<h3 class="erase">Ultimo Reporte</h3><div class="item">' + ultimoReporte +'</div>')
 };
+
+})

@@ -106,10 +106,10 @@ class Query < ActiveRecord::Base
     return self
   end
 
-  def get_vehicle_position(vehicle_id) 
+  def get_vehicle_position(vehicle_id)
     self.check_token
     self.selected_car = vehicle_id
-    url = URI('https://api.intraffic.com.ve/vehicles/get_vehicle_position.json/?vehicle_id=' + vehicle_id) 
+    url = URI('https://api.intraffic.com.ve/vehicles/get_vehicle_position.json/?vehicle_id=' + vehicle_id)
     http = Net::HTTP.new(url.host, url.port)
     http.use_ssl = true
     http.verify_mode = OpenSSL::SSL::VERIFY_NONE
@@ -153,12 +153,14 @@ class Query < ActiveRecord::Base
     response_string = http_response.read_body
     response = JSON.parse(response_string)
     self.routes = response
+
     self.fixing_routes
     self.adding_miliseconds
     return self
   end
 
-  #metodo para agregar a cada link un array de coordenadas en formato lat-long 
+
+  #metodo para agregar a cada link un array de coordenadas en formato lat-long
 
   def fixing_routes
     @routes = self.routes
@@ -179,7 +181,7 @@ class Query < ActiveRecord::Base
     @route = self.routes
     @routes["features"].each do |link|
       link["properties"]["speed_miliseconds"] = link["properties"]["rt_travel_time"]*10000
-    end 
+    end
   end
 
 end
@@ -189,7 +191,7 @@ end
   # def get_vehicles_position #Siempre obtiene las mismas coordenadas
   #   url_base = 'https://api.intraffic.com.ve/vehicles/get_vehicle_position.json/?vehicle_id='
   #   self.cars.each do |car|
-  #     url = URI(url_base + car) 
+  #     url = URI(url_base + car)
   #     http = Net::HTTP.new(url.host, url.port)
   #     http.use_ssl = true
   #     http.verify_mode = OpenSSL::SSL::VERIFY_NONE
@@ -205,8 +207,8 @@ end
   #   end
   #   return self
   # end
-
   #Metodo viejo de Routes
+
 
   # def get_route_2 #Este es el metodo truqueado
   #   self.check_token

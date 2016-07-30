@@ -6,13 +6,6 @@ var car = L.icon({
    iconSize:     [25, 25],
     });
 
-
-var myLines = {
-    "type": "LineString",
-    "coordinates": [[10.48815, -66.87653], [10.48830, -66.87670],
-                    [10.48815, -66.87343], [10.48830, -66.82370]]
-}
-
 var myStyle = {
     "color": "#ff7800",
     "weight": 5,
@@ -22,37 +15,62 @@ var myStyle = {
 var partvenezuela = [[10.48815, -66.87653]];
 
 map.fitBounds(partvenezuela);
-//
-// var marker1 = L.Marker.movingMarker(myLines.coordinates, [10000,10000,10000], { icon: car }).addTo(map);
-// L.polyline(myLines.coordinates).addTo(map);
-// marker1.once('click', function () {
-//     marker1.start();
-//     marker1.on('click', function() {
-//         if (marker1.isRunning()) {
-//             marker1.pause();
-//         } else {
-//             marker1.start();
-//         }
-//     });
-//     setTimeout(function() {
-//     }, 2000);
-// });
-// marker1.bindPopup('<b>Click me to start !</b>');
-// marker1.openPopup();
 
+
+function Simulation(data){
+  var  arrayCoordinates = []
+  data.features.forEach(function(link) {
+      link.geometry.lat_long.forEach(function(coordinate) {
+      arrayCoordinates.push(coordinate);
+    })
+    })
+    myvar = data;
+    var myStyle = function(feature) {
+        var traffic = (feature.properties.rt_travel_time)/(feature.properties.free_travel_time)
+        time = feature.properties.rt_travel_time
+        miliseconds = feature.properties.speed_miliseconds
+        console.log(miliseconds);
+     if(traffic <= 1.3){
+                 return {color: "green",weight:5,opacity:1};
+     }else if(traffic <=1.7){
+                 return {color: "orange",weight:5,opacity:1};
+     }else if(traffic > 1.7){
+         return {color: "red",weight:5,opacity:1};
+     }
+    }
+    L.geoJson(myvar, {
+            style: myStyle
+       }).addTo(map);
+// -----ANIMACION FLUIDA PERO APARECE EN LA ANTARTIDA----------------------
+
+       var marker2 = L.Marker.movingMarker(arrayCoordinates,
+           miliseconds, {autostart: true,icon: car}).addTo(map);
+
+// -----ANIMACION NO FLUIDA PERO APARECE BIEN EN LA RUTA  comentar self.fixing_routes en el model----------------------
+  // var j = 0;
   //
-  // var coord=[]
-  // $.each(params,function(index,value){
-  //   coord.push('points[]'+(index+1))
-  //   coord.push(value.lng+','+value.lat)
-  // });
-  // console.log(coord)
-  // $.ajax({
-  // url: '/',
-  // dataType: 'json',
-  // method:'POST',
-  // data: {points:coord},
-  // success: (data) => {
-  //   settingGeojson(data)
+  // var marker = L.marker([0, 0], {
+  //   icon:car
+  // }).addTo(map);
+  //
+  // function tick() {
+  //     marker.setLatLng(L.latLng(
+  //         arrayCoordinates[j][1],
+  //         arrayCoordinates[j][0]));
+  //
+  //     if (++j < arrayCoordinates.length) setTimeout(tick, 1000);
   // }
-  // });
+  //
+  // tick();
+  marker2.on('end', function() {
+      marker2.bindPopup('<b>Time '+time+ ' minutos!</b>', {closeOnClick: false})
+      marker2.openPopup();
+
+  });
+
+
+}
+$('#clear').on('click', function(){
+
+  location.reload()
+});

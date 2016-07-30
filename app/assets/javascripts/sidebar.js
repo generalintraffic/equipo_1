@@ -1,4 +1,6 @@
 $(document).on('click', 'input', function () {
+  $(".erase").remove()
+  $(".item2").remove()
   $('div').removeClass('active');
   $(this).addClass('active');
   var id = $(this).attr("id");
@@ -22,7 +24,7 @@ function Data(data){
   var ultimoReporte = d.getDate()+"/"+d.getMonth()+" "+d.getHours().toString() + ":" + d.getMinutes().toString() + ":" + d.getSeconds().toString();
 
   $("#hola").append(
-  '<h3 class="erase">Ultimo Reporte</h3><div class="item">' + ultimoReporte +'</div>')
+  '<h3 class="erase">Ultimo Reporte</h3><div class="item2">' + ultimoReporte +'</div>')
 };
 
 })

@@ -15,6 +15,8 @@
 #  selected_car :string
 #
 
+#lo logramos!
+
 class Query < ActiveRecord::Base
   belongs_to :user
 
